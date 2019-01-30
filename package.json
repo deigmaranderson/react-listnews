@@ -1,6 +1,6 @@
 {
-  "name": "paginated-hn",
-  "version": "0.0.1",
+  "name": "list-news",
+  "version": "1.0",
   "private": true,
   "devDependencies": {
     "react-scripts": "0.9.5"
