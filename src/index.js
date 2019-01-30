@@ -7,8 +7,8 @@ import {
   BrowserRouter,
 } from "react-router-dom";
 
-import Detail from './Detail'
-import ListNews from './ListNews'
+import Detail from './components/detail/Detail'
+import ListNews from './components/list/ListNews'
 
 ReactDOM.render(
     <BrowserRouter>
@@ -19,5 +19,4 @@ ReactDOM.render(
     </BrowserRouter>,
     document.getElementById('root')
 );
-    //  document.getElementById('root'));
      

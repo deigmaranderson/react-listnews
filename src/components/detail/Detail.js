@@ -14,10 +14,9 @@ class Detail extends Component {
         return (
             <div>
                 {/* <h1>{this.props.webTitle}</h1> */}
-    <p> A implementar </p>
+                <p> A implementar </p>
             </div>
         );
-
 
     }
 
