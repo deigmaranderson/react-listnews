@@ -28,53 +28,49 @@ const getNewsUrl = (value, page) =>
 class ListNews extends React.Component {
   constructor(props) {
     super(props);
-
     this.state = {
       results: [],
       page: 1,
       isLoading: false,
       isError: false,
-    };
-
-   
-  }
+  };  
+}
  
-  componentDidMount() {
+componentDidMount() {
+  this.fetchStories('', 1);
+}
+
+onInitialSearch = (e) => {
+  e.preventDefault();
+  const { value } = this.input;
+
+  if (value === '') {
     this.fetchStories('', 1);
   }
 
-  onInitialSearch = (e) => {
-    e.preventDefault();
+  this.fetchStories(value, 1);
+}
 
-    const { value } = this.input;
+onPaginatedSearch = (e) =>
+  this.fetchStories(this.input.value, this.state.page + 1);
 
-    if (value === '') {
-      this.fetchStories('', 1);
-    }
+fetchStories = (value, page) => {
+  this.setState({ isLoading: true });
+  fetch(getNewsUrl(value, page))
+    .then(response => response.json())
+    .then(result => this.onSetResult(result, page))
+    .catch(this.onSetError);
+}
 
-    this.fetchStories(value, 1);
-  }
+onSetResult = (result, page) =>
+  page === 1
+    ? this.setState(applySetResult(result.response))
+    : this.setState(applyUpdateResult(result.response));
 
-  onPaginatedSearch = (e) =>
-    this.fetchStories(this.input.value, this.state.page + 1);
+onSetError = () =>
+  this.setState(applySetError);
 
-  fetchStories = (value, page) => {
-    this.setState({ isLoading: true });
-    fetch(getNewsUrl(value, page))
-      .then(response => response.json())
-      .then(result => this.onSetResult(result, page))
-      .catch(this.onSetError);
-  }
-
-  onSetResult = (result, page) =>
-    page === 1
-      ? this.setState(applySetResult(result.response))
-      : this.setState(applyUpdateResult(result.response));
-
-  onSetError = () =>
-    this.setState(applySetError);
-
-  render() {
+render() {
     return (
       <div className="page">
         <div className="interactions">
@@ -96,7 +92,6 @@ class ListNews extends React.Component {
 }
 
 const List = ({ list }) => 
-
   <div className="list">
     {list.map(item => 
     <div className="list-row" key={item.apiUrl}>
